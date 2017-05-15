@@ -30,9 +30,7 @@
 			+	'</style>';
 
 		var days_labels = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-		var months_labels = ['Enero', 'Febrero', 'Marzo', 'Abril',
-                        'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre',
-                        'Octubre', 'Noviembre', 'Diciembre'];
+		var months_labels = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre','Octubre', 'Noviembre', 'Diciembre'];
 		var days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 		var current_date = new Date();
 
@@ -105,7 +103,7 @@
 			            	var isValidDate = true;
 			            	var newDate = new Date(calendarObj.year + '-' + month_string + '-' + day_string);
 
-			            	if ( newDate.setHours(0,0,0,0) < todayDate.setHours(0) ) {
+			            	if ( newDate.setHours(0,0,0,0) < todayDate.setHours(0,0,0,0) ) {
 			            		isValidDate = false;
 			            	}
 
@@ -125,7 +123,7 @@
 			                
 			                day++;
 			            } else {
-			                html += '<div class="day"></div>';
+			                html += '<div class="day" style="width: 14.285714285%;height: 44px;display: inline-block;margin: 0;vertical-align: top;"></div>';
 			            }
 			        }
 			        // Detener el ciclo al terminar los dias del mes
@@ -160,6 +158,8 @@
 			    var cal = new Calendar( month,year );
 			    return cal.generateHTML();
 			}
+
+			_this.html( writeCalendar( ( settings.startingMonth - 1 ), settings.startingYear ) );
 
 		    function activeSelections() {
 		    	_this.find('.day .day_value').click( function() {
@@ -196,8 +196,6 @@
 			    });
 		    }
 
-		    // Escribir calendario y habilitar seleccion
-		    _this.html( writeCalendar( ( settings.startingMonth - 1 ), settings.startingYear ) );
 		    activeSelections();
 		});
 	};
