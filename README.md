@@ -1,7 +1,7 @@
 # JS Datepicker
 jQuery plug-in para poder hacer selección de fechas
 
-## Instalacion
+## Instalación
 
 1. Añadir jQuery.
 ```html
