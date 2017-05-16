@@ -3,12 +3,12 @@ jQuery plug-in para poder hacer selección de fechas
 
 ## Instalacion
 
-1. Añadir jQuery
+1. Añadir jQuery.
 ```html
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 ```
 
-2. Llamar el archivo js para el plug-in justo despues de haber agregado jQuery
+2. Llamar el archivo js para el plug-in justo despues de haber agregado jQuery.
 ```html
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/datepicker.js"></script>
@@ -32,6 +32,7 @@ Mandar a llamar `$(selector).datepicker();` y agregarlo dentro del `$(document).
 
 #### Modificar valores predeterminados
 Puedes editar los valores predeterminados para personalizar tu datepicker.
+
 ```js
 // Estos son los valores por defecto
 $('#datepicker').datepicker({
@@ -48,6 +49,20 @@ $('#datepicker').datepicker({
     maxYear: 2030, // Año maximo para selección de años
     minYear: 1990, // Año minimo para selección de años
     onDaySelection: function() {},
+});
+```
+
+### Input Relacionado
+
+Colocar un elemento `input` con un id para poder mostrar la fecha seleccionada en este.
+```html
+    <input type="text" id="datepicker-input" name="">
+    <div id="datepicker"></div>
+```
+En el js asignar el id del `input` agregado.
+```js
+$('#datepicker').datepicker({
+    inputId: 'datepicker-input'
 });
 ```
 
