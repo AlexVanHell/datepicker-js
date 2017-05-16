@@ -1,5 +1,5 @@
 (function ($) {
-	$.fn.calendarPlugin = function( options ) {
+	$.fn.datepicker = function( options ) {
 
 		var calendarPluginDate = new Date(); 
 		var settings = $.extend({
