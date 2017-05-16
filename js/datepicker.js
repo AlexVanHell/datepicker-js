@@ -8,7 +8,6 @@
 			rightButton: '',
 			selectionColor: '#424242',
 			hoverColor: 'rgba(0,0,0,0.08)',
-			buttonOpacity: '1',
 			blockDays: false,
 			separator: '/',
 			yearSelection: true,
@@ -16,7 +15,7 @@
 			startingMonth: calendarPluginDate.getMonth() + 1,
 			maxYear: calendarPluginDate.getFullYear() + 20,
 			minYear: calendarPluginDate.getFullYear() - 20,
-			onDaySelect: function() {},
+			onDaySelection: function() {},
         }, options );
         // Estos son los predeterminados
 
@@ -81,14 +80,14 @@
 				html += 		'</div>';
 				html += 		'<div class="calendar_buttons" style="width: 100%;height: 40px;padding: 0;position: absolute;top: 0;">';
 									if ( settings.leftButton !== '' ) {
-				html +=				'<button class="left" style="cursor: pointer;border: none;top: 0;width: 40px;height: 40px;background-size: 24px;background-repeat: no-repeat;background-position:center;background-color: transparent;opacity: '+ settings.buttonOpacity +';background-image: url('+ settings.leftButton +');"></button>';
+				html +=				'<button class="left" style="cursor: pointer;border: none;top: 0;width: 40px;height: 40px;background-size: 24px;background-repeat: no-repeat;background-position:center;background-color: transparent;background-image: url('+ settings.leftButton +');"></button>';
 									} else {
-				html +=				'<button class="left" style="cursor: pointer;border: none;top: 0;width: auto;height: 40px;line-height: 40px;color: #fff;background-color: #616161;opacity: '+ settings.buttonOpacity +';border-radius: 4px;"><b>Anterior</b></button>';
+				html +=				'<button class="left" style="cursor: pointer;border: none;top: 0;width: auto;height: 40px;line-height: 40px;color: #fff;background-color: #616161;border-radius: 4px;"><b>Anterior</b></button>';
 									}
 									if ( settings.rightButton !== '' ) {
-				html +=				'<button class="right" style="cursor: pointer;border: none;top: 0;float: right;width: 40px;height: 40px;background-size: 24px;background-repeat: no-repeat;background-position:center;background-color: transparent;opacity: '+ settings.buttonOpacity +';background-image: url('+ settings.rightButton +');"></button>';
+				html +=				'<button class="right" style="cursor: pointer;border: none;top: 0;float: right;width: 40px;height: 40px;background-size: 24px;background-repeat: no-repeat;background-position:center;background-color: transparent;background-image: url('+ settings.rightButton +');"></button>';
 									} else {
-				html +=				'<button class="right" style="cursor: pointer;border: none;top: 0;float: right;width: auto;height: 40px;line-height: 40px;color: #fff;background-color: #616161;opacity: '+ settings.buttonOpacity +';border-radius: 4px;"><b>Siguiente</b></button>';
+				html +=				'<button class="right" style="cursor: pointer;border: none;top: 0;float: right;width: auto;height: 40px;line-height: 40px;color: #fff;background-color: #616161;border-radius: 4px;"><b>Siguiente</b></button>';
 									}
 				html += 		'</div>';
 				html += 	'</div>';
@@ -174,7 +173,7 @@
 		    		_this.find('.day_value').removeClass('selected');
 		    		$(this).addClass('selected');
 
-		    		settings.onDaySelect();
+		    		settings.onDaySelection();
 		    	});
 
 		    	_this.click( function() {
