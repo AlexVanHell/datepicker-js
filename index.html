@@ -5,23 +5,48 @@
 		<meta charset="utf-8">
 		<meta name='viewport', content='width=device-width, maximum-scale=1.0 user-scalable=no'>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript" src="js/calendar-plugin.js"></script>
+		<script type="text/javascript" src="js/datepicker.js"></script>
 		<script type="text/javascript">
 			$(document).ready( function() {
-				$('#calendar').calendarPlugin({
-					backgroundColor: '#000'
+				$('#datepicker').datepicker({
+					inputId: 'input-date',
+					selectionColor: '#2196F3'
 				});
 			});
 		</script>
 		<style type="text/css">
 			body {
 				font-family: sans-serif;
+				background-color: #F5F5F5;
+			}
+			.field {
+				padding: 12px;
+				margin-bottom: 16px;
+			} .field input {
+				width: calc(100% - 26px);
+				padding: 12px;
+				height: 24px;
+				border: 1px solid #eeeeee;
+				background-color: #fff;
+				border-radius: 4px;
+			}
+			.calendar_container {
+				width: auto;
+				max-width: 520px;
+				margin: 0 auto;
+				background-color: #fff;
+				padding: 16px;
+				border-radius: 4px;
+				box-shadow: 0 0 8px rgba(0, 0, 0, 0.16);
 			}
 		</style>
 	</head>
 	<body>
-		<div id="calendar">
-
+		<div class="field">
+			<input id="input-date" type="text" name="" placeholder="Fecha seleccionada" disabled="disabled">
 		</div>
+		<section class="calendar_container">
+			<div id="datepicker"></div>
+		</section>
 	</body>
 </html>

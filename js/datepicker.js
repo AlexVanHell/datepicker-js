@@ -6,16 +6,17 @@
 			inputId: undefined,
 			leftButton: '',
 			rightButton: '',
-			backgroundColor: '#424242',
+			selectionColor: '#424242',
+			hoverColor: 'rgba(0,0,0,0.08)',
 			buttonOpacity: '1',
 			blockDays: false,
 			separator: '/',
 			yearSelection: true,
 			startingYear: calendarPluginDate.getFullYear(),
 			startingMonth: calendarPluginDate.getMonth() + 1,
-			maxYear: calendarPluginDate.getFullYear(),
-			minYear: calendarPluginDate.getFullYear() - 100,
-			selectionCallBack: function() {},
+			maxYear: calendarPluginDate.getFullYear() + 20,
+			minYear: calendarPluginDate.getFullYear() - 20,
+			onDaySelect: function() {},
         }, options );
         // Estos son los predeterminados
 
@@ -23,9 +24,9 @@
 			+	'<style type="text/css">'
 			+ 		'.calendar_plugin_container .calendar_title .year_title button.year_change_button:hover{background-color: rgba(0,0,0,0.06);}'
 			+ 		'.calendar_plugin_container .calendar_title .year_title ul.change_year_container li:hover{background-color: rgba(0,0,0,0.06);}'
-			+ 		'.calendar_plugin_container .day_value.selected{background-color: ' + settings.backgroundColor + ';color: #fff;font-weight: bold;}'
-			+ 		'.calendar_plugin_container .day_value:hover{background-color: rgba(0,0,0,0.06);}'
-			+ 		'.calendar_plugin_container .day_value.selected:hover{background-color: #424242;color: #fff;font-weight: bold;}'
+			+ 		'.calendar_plugin_container .day_value.selected{background-color: ' + settings.selectionColor + ';color: #fff;font-weight: bold;}'
+			+ 		'.calendar_plugin_container .day_value:hover{background-color: ' + settings.hoverColor + ';}'
+			+ 		'.calendar_plugin_container .day_value.selected:hover{background-color: ' + settings.selectionColor + ';color: #fff;font-weight: bold;}'
 			+ 		'.calendar_plugin_container .calendar_buttons button:hover{background-color: rgba(0,0,0,0.07);}'
 			+	'</style>';
 
@@ -33,12 +34,12 @@
 		var months_labels = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre','Octubre', 'Noviembre', 'Diciembre'];
 		var days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 		var current_date = new Date();
+		var todayDate = new Date();
+		todayDate.setDate(todayDate.getDate() - 1);
 
 		return this.each( function() {
 			var _this = $(this);
 			var calendarObj = {};
-			var todayDate = new Date();
-			todayDate.setDate(todayDate.getDate() - 1);
 
 			function Calendar( month, year ) {
 				calendarObj.month = ( isNaN(month) || month == null ) ? current_date.getMonth() : month;
@@ -49,7 +50,7 @@
 				var firstDay = new Date(calendarObj.year, calendarObj.month, 1);
     			var startingDay = firstDay.getDay(); // Dia inicial en la semana
 	      		var monthLength = days_in_month[calendarObj.month]; // Numero de dias en el mes
-    			var month_string = calendarObj.month + 1;
+    			var month_string = (calendarObj.month + 1 < 10) ? '0' + (calendarObj.month + 1) : calendarObj.month + 1;
 
 				if ( calendarObj.month == 1 ) { // Febrero solamente
 	            	if( ( calendarObj.year % 4 == 0 && calendarObj.year % 100 != 0 ) || calendarObj.year % 400 == 0 ) {
@@ -57,16 +58,12 @@
 	            	}
 	      		}
 
-	      		if ( month_string < 10 ) {
-	      			month_string = '0' + month_string;
-	      		}
-
 				var html = '';
 				html += style;
 				html += '<div class="calendar_plugin_container" style="width: 100%;margin: 0 auto;text-align: left;position: relative;fo">';
 				html += 	'<div class="calendar_top">';
-				html += 		'<div class="calendar_title" style="padding: 12px;padding-bottom: 18px;text-align: center;">';
-				html +=				'<div class="month_title" style="padding: 0;font-weight: bold;font-size: 16px;">';
+				html += 		'<div class="calendar_title" style="padding: 0 12px 18px 12px;text-align: center;">';
+				html +=				'<div class="month_title" style="padding: 0;font-weight: bold;font-size: 16px;margin-bottom: 4px;">';
 				html +=					months_labels[calendarObj.month];
 				html += 			'</div>';
 				html +=				'<div class="year_title" style="font-size: 14px;position: relative;">';
@@ -82,12 +79,20 @@
 										}
 				html += 			'</div>';
 				html += 		'</div>';
-				html += 		'<div class="calendar_buttons" style="width: 100%;height: 40px;padding: 0;position: absolute;top: 12px;">';
+				html += 		'<div class="calendar_buttons" style="width: 100%;height: 40px;padding: 0;position: absolute;top: 0;">';
+									if ( settings.leftButton !== '' ) {
 				html +=				'<button class="left" style="cursor: pointer;border: none;top: 0;width: 40px;height: 40px;background-size: 24px;background-repeat: no-repeat;background-position:center;background-color: transparent;opacity: '+ settings.buttonOpacity +';background-image: url('+ settings.leftButton +');"></button>';
-				html +=				'<button class="right" style="cursor: pointer;border: none;top: 0;width: 40px;height: 40px;background-size: 24px;background-repeat: no-repeat;background-position:center;background-color: transparent;opacity: '+ settings.buttonOpacity +';background-image: url('+ settings.rightButton +');"></button>';
+									} else {
+				html +=				'<button class="left" style="cursor: pointer;border: none;top: 0;width: auto;height: 40px;line-height: 40px;color: #fff;background-color: #616161;opacity: '+ settings.buttonOpacity +';border-radius: 4px;"><b>Anterior</b></button>';
+									}
+									if ( settings.rightButton !== '' ) {
+				html +=				'<button class="right" style="cursor: pointer;border: none;top: 0;float: right;width: 40px;height: 40px;background-size: 24px;background-repeat: no-repeat;background-position:center;background-color: transparent;opacity: '+ settings.buttonOpacity +';background-image: url('+ settings.rightButton +');"></button>';
+									} else {
+				html +=				'<button class="right" style="cursor: pointer;border: none;top: 0;float: right;width: auto;height: 40px;line-height: 40px;color: #fff;background-color: #616161;opacity: '+ settings.buttonOpacity +';border-radius: 4px;"><b>Siguiente</b></button>';
+									}
 				html += 		'</div>';
 				html += 	'</div>';
-				html +=		'<div class="day_title" style="text-align: center;font-weight: bold;opacity: 0.6;">';
+				html +=		'<div class="day_title" style="text-align: center;font-weight: bold;opacity: 0.5;">';
 				html +=			'<div style="width: 14.285714285%;padding: 4px 0 4px 0;display: inline-block;margin: 0;vertical-align: top;">D</div><div style="width: 14.285714285%;padding: 4px 0 4px 0;display: inline-block;margin: 0;vertical-align: top;">L</div><div style="width: 14.285714285%;padding: 4px 0 4px 0;display: inline-block;margin: 0;vertical-align: top;">M</div><div style="width: 14.285714285%;padding: 4px 0 4px 0;display: inline-block;margin: 0;vertical-align: top;">M</div><div style="width: 14.285714285%;padding: 4px 0 4px 0;display: inline-block;margin: 0;vertical-align: top;">J</div><div style="width: 14.285714285%;padding: 4px 0 4px 0;display: inline-block;margin: 0;vertical-align: top;">V</div><div style="width: 14.285714285%;padding: 4px 0 4px 0;display: inline-block;margin: 0;vertical-align: top;">S</div>';
 				html += 	'</div>';
 				html += 	'<div class="calendar_m_cont" style="font-size: 15px;">';
@@ -151,15 +156,15 @@
 				        calendarObj.year++;
 				    }
 				}
-			    _this.html( writeCalendar( calendarObj.month, calendarObj.year ) );
+			    writeCalendar( calendarObj.month, calendarObj.year );
 			}
 
 		    function writeCalendar( month, year ) {
-			    var cal = new Calendar( month,year );
-			    return cal.generateHTML();
+			    var cal = new Calendar( month, year );
+			    _this.html(cal.generateHTML());
 			}
 
-			_this.html( writeCalendar( ( settings.startingMonth - 1 ), settings.startingYear ) );
+			writeCalendar( ( settings.startingMonth - 1 ), settings.startingYear );
 
 		    function activeSelections() {
 		    	_this.find('.day .day_value').click( function() {
@@ -169,7 +174,7 @@
 		    		_this.find('.day_value').removeClass('selected');
 		    		$(this).addClass('selected');
 
-		    		settings.selectionCallBack();
+		    		settings.onDaySelect();
 		    	});
 
 		    	_this.click( function() {
